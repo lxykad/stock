@@ -11,6 +11,9 @@ import com.lxy.stock.presenter.StockPresenter;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mPresenter = new StockPresenter();
+        mPresenter = new StockPresenter(this);
     }
 
     //获取stock的集合
@@ -37,13 +40,17 @@ public class MainActivity extends AppCompatActivity {
         mPresenter.getGroupStockData(new CommonResponseHandler(){
             @Override
             public void onFailure() {
-
+                System.out.println("11111111111==========failure");
             }
 
             @Override
             public void onLoadGroupStockSuccess(ArrayList<Stock> list) {
-
+                System.out.println("11111111111==========success");
             }
         });
     }
+
+
+
+
 }
