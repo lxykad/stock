@@ -1,4 +1,4 @@
-package com.lxy.stock.module;
+package com.lxy.stock.bean;
 
 public class Stock {
     public static final String TRADE = "TRADE";//正常交易

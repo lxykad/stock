@@ -1,4 +1,4 @@
-package com.lxy.stock.module;
+package com.lxy.stock.bean;
 import java.util.ArrayList;
 
 public class Message {

@@ -1,6 +1,6 @@
 package com.lxy.stock.utils;
 
-import com.lxy.stock.module.Stock;
+import com.lxy.stock.bean.Stock;
 
 import org.json.JSONArray;
 import org.json.JSONException;
