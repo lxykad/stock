@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lxy.stock.R;
-import com.lxy.stock.bean.Message;
+import com.lxy.stock.bean.JsonBean;
 
 import java.util.ArrayList;
 
@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHolder> {
 
     private Context mContext;
-    ArrayList<Message> mList = new ArrayList<>();
+    ArrayList<JsonBean.MessagesBean> mList = new ArrayList<>();
 
     public RecyclerAdapter(Context context) {
         mContext = context;
     }
 
-    public void addItems(ArrayList<Message> list) {
+    public void addItems(ArrayList<JsonBean.MessagesBean> list) {
         mList.addAll(list);
         notifyDataSetChanged();
     }
@@ -38,9 +38,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        Message bean = mList.get(position);
+        JsonBean.MessagesBean bean = mList.get(position);
 
-        holder.textView.setText(bean.summary);
+        holder.textView.setText(bean.Title);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.lxy.stock.common;
 
-import com.lxy.stock.bean.Message;
-import com.lxy.stock.bean.Stock;
+import com.lxy.stock.bean.JsonBean;
 
 import java.util.ArrayList;
 
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 public class CommonResponseHandler {
     public void onStart() { }
     public void onFailure() { }
-    public void onLoadGroupStockSuccess(ArrayList<Message> list){}
-    public void onLoadSingleStockSuccess(Stock stock){}
+    public void onLoadGroupStockSuccess(ArrayList<JsonBean.MessagesBean> list){}
+    //public void onLoadSingleStockSuccess(Stock stock){}
 
 }
