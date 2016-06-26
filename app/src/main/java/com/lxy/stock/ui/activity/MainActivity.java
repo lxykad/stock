@@ -48,7 +48,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLoadGroupStockSuccess(final ArrayList<JsonBean.MessagesBean> list) {
                 //数据解析成功 更新列表
-                mAdapter.addItems(list);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.addItems(list);
+                    }
+                });
+
             }
         });
     }

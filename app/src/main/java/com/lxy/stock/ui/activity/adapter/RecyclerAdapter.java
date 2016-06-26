@@ -5,12 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lxy.stock.R;
 import com.lxy.stock.bean.JsonBean;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lxy
@@ -40,7 +46,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
     public void onBindViewHolder(MyHolder holder, int position) {
         JsonBean.MessagesBean bean = mList.get(position);
 
-        holder.textView.setText(bean.Title);
+        holder.title.setText(bean.Title);
+        holder.summary.setText(bean.Summary);
+        holder.likeCount.setText(bean.LikeCount + "");
+        holder.source.setText("来自 " + bean.Source);
+        holder.time.setText(bean.CreatedAt + "");
+
+        List<JsonBean.MessagesBean.StocksBean> stocks = bean.Stocks;
+        for (int i = 0; i < stocks.size(); i++) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_stock, null);
+            TextView name = (TextView) view.findViewById(R.id.tv_name);
+            ImageView img = (ImageView) view.findViewById(R.id.img);
+
+            name.setText(stocks.get(i).Name);
+            holder.scrollLayout.addView(view);
+        }
+
     }
 
     @Override
@@ -50,11 +71,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
 
     class MyHolder extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        TextView title;
+        TextView summary;
+        TextView likeCount;
+        TextView time;
+        TextView source;
+        HorizontalScrollView scrollView;
+        LinearLayout scrollLayout;
 
         public MyHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.tv_title);
+            title = (TextView) itemView.findViewById(R.id.tv_title);
+            summary = (TextView) itemView.findViewById(R.id.tv_summary);
+            likeCount = (TextView) itemView.findViewById(R.id.tv_like_count);
+            time = (TextView) itemView.findViewById(R.id.tv_time);
+            source = (TextView) itemView.findViewById(R.id.tv_source);
+
+            scrollView = (HorizontalScrollView) itemView.findViewById(R.id.scroll_view_layout);
+            scrollLayout = (LinearLayout) itemView.findViewById(R.id.scroll_linear_layout);
+
         }
     }
 
