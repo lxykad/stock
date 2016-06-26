@@ -1,6 +1,9 @@
 package com.lxy.stock.ui.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,9 @@ import android.widget.TextView;
 
 import com.lxy.stock.R;
 import com.lxy.stock.bean.JsonBean;
+import com.lxy.stock.bean.Stock;
+import com.lxy.stock.common.CommonResponseHandler;
+import com.lxy.stock.presenter.StockPresenter;
 import com.lxy.stock.utils.Tools;
 
 import org.w3c.dom.Text;
@@ -52,15 +58,50 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
         holder.summary.setText(bean.Summary);
         holder.likeCount.setText(bean.LikeCount + "");
         holder.source.setText("来自 " + bean.Source);
-        holder.time.setText(Tools.formartDate(new Date(),new Date(bean.UpdatedAt * 1000)));
+        holder.time.setText(Tools.formartDate(new Date(), new Date(bean.UpdatedAt * 1000)));
+
+        final Bitmap upImage = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_stock_up);
+        final Bitmap downImage = BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_stock_down);
+
 
         List<JsonBean.MessagesBean.StocksBean> stocks = bean.Stocks;
         for (int i = 0; i < stocks.size(); i++) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_stock, null);
-            TextView name = (TextView) view.findViewById(R.id.tv_name);
-            ImageView img = (ImageView) view.findViewById(R.id.img);
+            final TextView name = (TextView) view.findViewById(R.id.tv_name);
+            final TextView change = (TextView) view.findViewById(R.id.tv_px_change);
+            final ImageView img = (ImageView) view.findViewById(R.id.img);
+
 
             name.setText(stocks.get(i).Name);
+            StockPresenter.getSingleStock(stocks.get(i).Symbol, new CommonResponseHandler() {
+                @Override
+                public void onFailure() {
+
+                }
+
+                @Override
+                public void onLoadSingleStockSuccess(Stock stock) {
+                    String px_change_rate = stock.px_change_rate;
+                    String formateChange = Tools.formateChange(px_change_rate);
+                    float number = Float.valueOf(formateChange);
+                    if (number > 0) {
+                        //涨
+                        change.setTextColor(Color.parseColor("#DE3B37"));
+                        name.setTextColor(Color.parseColor("#DE3B37"));
+                        img.setImageBitmap(upImage);
+
+                    } else {
+                        //跌
+                        change.setTextColor(Color.parseColor("#3AA63F"));
+                        name.setTextColor(Color.parseColor("#3AA63F"));
+                        img.setImageBitmap(downImage);
+
+                    }
+                    change.setText(formateChange + "%");
+                }
+            });
+
+
             holder.scrollLayout.addView(view);
         }
 
@@ -80,6 +121,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
         TextView source;
         HorizontalScrollView scrollView;
         LinearLayout scrollLayout;
+
 
         public MyHolder(View itemView) {
             super(itemView);

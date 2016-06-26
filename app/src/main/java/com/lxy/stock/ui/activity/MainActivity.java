@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private StockPresenter mPresenter;
     private RecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //获取数据
-    public void loadData(){
-        mPresenter.getGroupStockData(new CommonResponseHandler(){
+    public void loadData() {
+        mPresenter.getGroupStockData(new CommonResponseHandler() {
             @Override
             public void onFailure() {
                 //数据解析失败
@@ -60,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //刷新数据
-    public void refresh(){
-
+    public void refresh() {
+        loadData();
     }
 
 }

@@ -4,15 +4,22 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.lxy.stock.bean.JsonBean;
+import com.lxy.stock.bean.Stock;
 import com.lxy.stock.common.CommonResponseHandler;
+import com.lxy.stock.common.HttpHelper;
+import com.lxy.stock.utils.HSJsonUtil;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import okhttp3.Call;
+
 /**
- * Created by liuxinyu on 2016/6/21.
+ * Created by lxy
  */
 public class StockPresenter {
 
@@ -64,6 +71,29 @@ public class StockPresenter {
             e.printStackTrace();
         }
         return buffer.toString();
+    }
+
+    public static void getSingleStock(String prod_name, final CommonResponseHandler handler) {
+
+        String url = HttpHelper.BASEURL + prod_name + "&fields=" + HttpHelper.FIELDS;
+        OkHttpUtils
+                .get()
+                .url(url)
+                .build()
+                .connTimeOut(10000)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        handler.onFailure();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Stock stock = HSJsonUtil.getRealInfo(response, "snapshot");
+                        handler.onLoadSingleStockSuccess(stock);
+                    }
+                });
+
     }
 
 }
