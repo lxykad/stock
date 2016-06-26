@@ -12,10 +12,12 @@ import android.widget.TextView;
 
 import com.lxy.stock.R;
 import com.lxy.stock.bean.JsonBean;
+import com.lxy.stock.utils.Tools;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,8 +52,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
         holder.summary.setText(bean.Summary);
         holder.likeCount.setText(bean.LikeCount + "");
         holder.source.setText("来自 " + bean.Source);
-        holder.time.setText(bean.CreatedAt + "");
-
+        holder.time.setText(Tools.formartDate(new Date(),new Date(bean.UpdatedAt * 1000)));
+        
         List<JsonBean.MessagesBean.StocksBean> stocks = bean.Stocks;
         for (int i = 0; i < stocks.size(); i++) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_stock, null);
