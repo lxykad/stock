@@ -53,7 +53,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyHold
         holder.likeCount.setText(bean.LikeCount + "");
         holder.source.setText("来自 " + bean.Source);
         holder.time.setText(Tools.formartDate(new Date(),new Date(bean.UpdatedAt * 1000)));
-        
+
         List<JsonBean.MessagesBean.StocksBean> stocks = bean.Stocks;
         for (int i = 0; i < stocks.size(); i++) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_stock, null);

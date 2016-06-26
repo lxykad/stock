@@ -59,4 +59,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //刷新数据
+    public void refresh(){
+
+    }
+
 }
