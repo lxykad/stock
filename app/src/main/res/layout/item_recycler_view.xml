@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="#1000"
     android:elevation="3dp"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
     android:orientation="vertical"
     app:cardCornerRadius="5dp">
 
@@ -13,10 +15,9 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="5dp">
@@ -26,7 +27,6 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:paddingTop="5dp"
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,6 +34,7 @@
                 android:maxLines="2"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:paddingTop="5dp"
                 android:textColor="#000"
                 android:textSize="18sp" />
 
@@ -46,8 +47,9 @@
                 android:paddingTop="5dp" />
 
             <HorizontalScrollView
+                android:paddingRight="10dp"
                 android:id="@+id/scroll_view_layout"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_summary"
                 android:scrollbars="none">

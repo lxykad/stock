@@ -1,9 +1,11 @@
 package com.lxy.stock.ui.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.lxy.stock.R;
 import com.lxy.stock.bean.JsonBean;
@@ -19,6 +21,21 @@ public class MainActivity extends AppCompatActivity {
     private StockPresenter mPresenter;
     private RecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private static final int REFRESH = 2;
+    private static final int REMOVE = 1;
+    //默认每5秒刷新一下数据
+    private Handler mRefreshHandler = new Handler();
+
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+
+            //此处刷新数据  根据服务器返回的字段做是否刷新逻辑
+            loadData();
+            Log.d("refresh data heare ", "run: loadData");
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mAdapter.addItems(list);
+                        refresh();
                     }
                 });
 
@@ -60,9 +78,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //刷新数据
+    //刷新数据 设置5秒刷新一次
     public void refresh() {
-        loadData();
+        mRefreshHandler.postDelayed(mRunnable, 5000);
     }
 
+    //页面销毁的时候取消刷新
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mRefreshHandler.removeCallbacks(mRunnable);
+    }
 }
