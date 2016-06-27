@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by user on 2016/6/24.
+ * Created by lxy
  */
 public class JsonBean {
 

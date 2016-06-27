@@ -6,7 +6,7 @@ import com.lxy.stock.bean.Stock;
 import java.util.ArrayList;
 
 /**
- * Created by liuxinyu on 2016/6/21.
+ * Created by lxy
  */
 public class CommonResponseHandler {
     public void onStart() { }
